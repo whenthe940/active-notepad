@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Notepad</title>
+    <link rel="stylesheet" href="themes.css">
+    <script src="mystyle.js" defer></script>
+</head>
+<body>
+    <!-- Name prompt -->
+    <div id="name-prompt">
+        <label for="username">What should we call you?</label>
+        <input type="text" id="username" maxlength="10" placeholder="Enter your name">
+        <button id="finish-btn">Finish</button>
+    </div>
+
+    <!-- Notepad Section (Hidden initially) -->
+    <div id="notepad-container" style="display: none;">
+        <textarea id="notepad" placeholder="Start typing..."></textarea>
+        
+        <!-- Button Section -->
+        <div id="button-container">
+            <button id="new-chatroom">New Chatroom</button>
+            <button id="go-back" style="display: none;">Go Back</button>
+            <button id="go-forward" style="display: inline-block;">Go Forward</button>
+        </div>
+    </div>
+
+    <!-- User List Section -->
+    <div id="user-list" style="display: none;">
+        <h3>Users:</h3>
+        <ul id="user-list-ul">
+            <!-- User list will go here -->
+        </ul>
+        <!-- Pencil Icon for renaming -->
+        <span id="pencil-icon" style="cursor: pointer;">✏️</span>
+    </div>
+
+    <!-- Links Section -->
+    <div id="links">
+        <!-- Discord Link -->
+        <div id="discord-link">
+            <a href="https://discord.gg/BPnJhVDr5m" target="_blank">Join Our Discord!</a>
+        </div>
+        <!-- Other Game Link -->
+        <div id="other-game-link">
+            <a href="https://bingos.vercel.app" target="_blank">Our Other Game</a>
+        </div>
+    </div>
+
+    <!-- Dark/Light Mode toggle -->
+    <div id="mode-toggle">
+        <span id="dark-mode" style="cursor: pointer;">🌙</span>
+        <span id="light-mode" style="cursor: pointer; display: none;">☀️</span>
+    </div>
+
+    <!-- Mouse Tracker for Users -->
+    <div id="mouse-tracker"></div>
+
+    <!-- Rename Popup -->
+    <div id="rename-popup" style="display: none;">
+        <input type="text" id="new-name" placeholder="Enter new name">
+        <button id="rename-btn">Rename</button>
+        <button id="close-popup">Cancel</button>
+    </div>
+</body>
+</html>
+
