@@ -1,3 +1,6 @@
+// Initialize socket connection
+const socket = io(); // Establish connection to the server
+
 let currentName = "";  // To keep track of the current username
 let oldName = "";      // To store the old name for "Formerly" functionality
 
@@ -12,10 +15,16 @@ document.getElementById('finish-btn').addEventListener('click', function() {
         // Set initial name next to mouse
         updateNameDisplay(currentName);
 
+        // Emit the username to the server
+        socket.emit('setName', currentName);
+
         // Mouse tracking functionality
         document.addEventListener('mousemove', function(e) {
             document.getElementById('mouse-tracker').style.left = `${e.pageX + 10}px`;
             document.getElementById('mouse-tracker').style.top = `${e.pageY + 10}px`;
+
+            // Emit mouse move to server for other players to see
+            socket.emit('mouseMove', { x: e.pageX, y: e.pageY });
         });
 
         // Show user list with pencil icon
@@ -44,6 +53,9 @@ document.getElementById('rename-btn').addEventListener('click', function() {
         currentName = newName;
         updateNameDisplay(`${newName} (Formerly: ${oldName})`);
 
+        // Emit the new name to the server
+        socket.emit('setName', currentName);
+
         // Close the rename popup
         document.getElementById('rename-popup').style.display = 'none';
     }
@@ -52,6 +64,23 @@ document.getElementById('rename-btn').addEventListener('click', function() {
 function updateNameDisplay(name) {
     document.getElementById('mouse-tracker').textContent = name;
 }
+
+// Listening for mouse movements from other users
+socket.on('mouseMove', function(data) {
+    // Show other players' mouse movements (this could be more advanced with custom cursor rendering)
+    console.log(`${data.id} moved to (${data.x}, ${data.y})`);
+});
+
+// Listening for updated user list from the server
+socket.on('updateUserList', function(usernames) {
+    const userListUl = document.getElementById('user-list-ul');
+    userListUl.innerHTML = ''; // Clear the current user list
+    usernames.forEach(username => {
+        const li = document.createElement('li');
+        li.textContent = username;
+        userListUl.appendChild(li);
+    });
+});
 
 document.getElementById('close-popup').addEventListener('click', function() {
     document.getElementById('rename-popup').style.display = 'none';
